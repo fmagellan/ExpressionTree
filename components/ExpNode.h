@@ -1,8 +1,10 @@
 // Copyright 2020 Magellan
 
-#ifndef _COMPONENTS_EXP_NODE_H_
-#define _COMPONENTS_EXP_NODE_H_
+#ifndef COMPONENTS_EXPNODE_H_
+#define COMPONENTS_EXPNODE_H_
 
+#include <iostream>
+#include <memory>
 #include <cassert>
 
 namespace Magellan {
@@ -13,16 +15,17 @@ class ExpNode {
     friend class Iterator;
 
     public:
-        ExpNode *m_left{ nullptr };
-        ExpNode *m_right{ nullptr };
+        std::shared_ptr<ExpNode> m_left;
+        std::shared_ptr<ExpNode> m_right;
         int m_value;
 
     public:
         ExpNode() = default;
-        ~ExpNode() = default;
-
+        ~ExpNode() {
+            std::cout << "ExpNode is deleted with value: " << m_value << '\n';
+        }
 };
 
 };  // namespace Magellan
 
-#endif  // _COMPONENTS_EXP_NODE_H_
+#endif  // COMPONENTS_EXPNODE_H_

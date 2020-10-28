@@ -1,19 +1,20 @@
 // Copyright 2020 Magellan
 
-#include "components/ExpNode.h"
-
 #include <iostream>
+#include <memory>
 #include <stack>
 
-Magellan::ExpNode* newNode(const int value) {
-    Magellan::ExpNode *pNode = new Magellan::ExpNode;
+#include "components/ExpNode.h"
+
+std::shared_ptr<Magellan::ExpNode> newNode(const int value) {
+    std::shared_ptr<Magellan::ExpNode> pNode = std::make_shared<Magellan::ExpNode>();
     pNode->m_value = value;
 
     return (pNode);
 }
 
 int main() {
-    Magellan::ExpNode *pRoot = newNode(4);
+    std::shared_ptr<Magellan::ExpNode> pRoot = newNode(4);
     pRoot->m_left = newNode(2);
     pRoot->m_right = newNode(6);
     pRoot->m_left->m_left = newNode(1);
@@ -21,12 +22,12 @@ int main() {
     pRoot->m_right->m_left = newNode(5);
     pRoot->m_right->m_right = newNode(7);
 
-    std::stack<Magellan::ExpNode *> _stack;
+    std::stack<std::shared_ptr<Magellan::ExpNode> > _stack;
     _stack.push(pRoot);
-    Magellan::ExpNode *pNode{ nullptr };
+    std::shared_ptr<Magellan::ExpNode> pNode;
 
     std::cout << "Values: ";
-    while(pNode || !_stack.empty()) {
+    while (pNode || !_stack.empty()) {
         if (pNode) {
             std::cout << pNode->m_value << ' ';
             _stack.push(pNode->m_right);
