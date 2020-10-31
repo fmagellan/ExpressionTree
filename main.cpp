@@ -5,7 +5,8 @@
 #include <stack>
 
 #include "components/ExpNode.h"
-#include "iterators/Iterator.h"
+#include "iterators/PreOrderIterator.h"
+#include "iterators/PostOrderIterator.h"
 
 std::shared_ptr<Magellan::ExpNode> newNode(const int value) {
     std::shared_ptr<Magellan::ExpNode> pNode = std::make_shared<Magellan::ExpNode>();
@@ -23,13 +24,22 @@ int main() {
     pRoot->m_right->m_left = newNode(5);
     pRoot->m_right->m_right = newNode(7);
 
-    Magellan::Iterator itr(pRoot);
-    std::cout << "Values: ";
-    while (itr.isValid()) {
-        std::cout << (*itr).m_value << ' ';
-        ++itr;
+    Magellan::PreOrderIterator preItr(pRoot);
+    std::cout << "Pre-order: ";
+    while (preItr.isValid()) {
+        std::cout << (*preItr).m_value << ' ';
+        ++preItr;
     }
     std::cout << '\n';
+
+    Magellan::PostOrderIterator postItr(pRoot);
+    std::cout << "Post-order: ";
+    while (postItr.isValid()) {
+        std::cout << (*postItr).m_value << ' ';
+        ++postItr;
+    }
+    std::cout << '\n';
+
 
     return (0);
 }

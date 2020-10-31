@@ -14,17 +14,17 @@ namespace Magellan {
 class Iterator {
     private:
         std::shared_ptr<ExpNode> m_root;
+
+    protected:
         std::shared_ptr<ExpNode> m_index;
-        std::stack<std::shared_ptr<ExpNode> > m_stack;
 
     public:
         explicit Iterator(std::shared_ptr<ExpNode> pNode)
             : m_root{ pNode }, m_index{ pNode }
         {
-            // m_stack.push(m_root);
         }
 
-        ~Iterator() = default;
+        virtual ~Iterator() = default;
 
         ExpNode& operator * () {
             assert(m_index && "Node is a nullptr.");
@@ -32,30 +32,7 @@ class Iterator {
             return (*m_index);
         }
 
-        Iterator& operator++ () {
-            assert (m_index && "Cannot advance the iterator.");
-            if (m_index->m_right) {
-                m_stack.push(m_index->m_right);
-            }
-
-            bool isIncremented{ false };
-            if (m_index->m_left) {
-                m_index = m_index->m_left;
-                isIncremented = true;
-            } else {
-                if (!m_stack.empty()) {
-                    m_index = m_stack.top();
-                    m_stack.pop();
-                    isIncremented = true;
-                }
-            }
-
-            if (!isIncremented) {
-                m_index = nullptr;
-            }
-
-            return (*this);
-        }
+        virtual void operator++ () = 0;
 
         bool isValid() const {
             return (m_index != nullptr);
