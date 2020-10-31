@@ -5,6 +5,7 @@
 #include <stack>
 
 #include "components/ExpNode.h"
+#include "iterators/Iterator.h"
 
 std::shared_ptr<Magellan::ExpNode> newNode(const int value) {
     std::shared_ptr<Magellan::ExpNode> pNode = std::make_shared<Magellan::ExpNode>();
@@ -22,20 +23,11 @@ int main() {
     pRoot->m_right->m_left = newNode(5);
     pRoot->m_right->m_right = newNode(7);
 
-    std::stack<std::shared_ptr<Magellan::ExpNode> > _stack;
-    _stack.push(pRoot);
-    std::shared_ptr<Magellan::ExpNode> pNode;
-
+    Magellan::Iterator itr(pRoot);
     std::cout << "Values: ";
-    while (pNode || !_stack.empty()) {
-        if (pNode) {
-            std::cout << pNode->m_value << ' ';
-            _stack.push(pNode->m_right);
-            pNode = pNode->m_left;
-        } else {
-            pNode = _stack.top();
-            _stack.pop();
-        }
+    while (itr.isValid()) {
+        std::cout << (*itr).m_value << ' ';
+        ++itr;
     }
     std::cout << '\n';
 

@@ -9,8 +9,6 @@
 
 namespace Magellan {
 
-// class Iterator;
-
 class ExpNode {
     friend class Iterator;
 
