@@ -1,19 +1,19 @@
 // Copyright 2020 Magellan
 
-#ifndef ITERATORS_POSTORDERITERATOR_H_
-#define ITERATORS_POSTORDERITERATOR_H_
+#ifndef ITERATORS_INORDERITERATOR_H_
+#define ITERATORS_INORDERITERATOR_H_
 
 #include "iterators/Iterator.h"
 #include "components/ExpNode.h"
 
 namespace Magellan {
 
-class PostOrderIterator : public Iterator {
+class InOrderIterator : public Iterator {
     private:
         std::stack<std::shared_ptr<ExpNode> > m_stack;
 
     public:
-        explicit PostOrderIterator(std::shared_ptr<ExpNode> pNode)
+        explicit InOrderIterator(std::shared_ptr<ExpNode> pNode)
             : Iterator(pNode) {
                 while (m_index->m_left) {
                     m_stack.push(m_index);
@@ -21,7 +21,7 @@ class PostOrderIterator : public Iterator {
                 }
         }
 
-        virtual ~PostOrderIterator() = default;
+        virtual ~InOrderIterator() = default;
 
         virtual void operator++ () override {
             assert (m_index && "Cannot advance the iterator.");
@@ -51,4 +51,4 @@ class PostOrderIterator : public Iterator {
 
 };  // namespace Magellan
 
-#endif  // ITERATORS_POSTORDERITERATOR_H_
+#endif  // ITERATORS_INORDERITERATOR_H_

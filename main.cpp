@@ -6,37 +6,45 @@
 
 #include "components/ExpNode.h"
 #include "iterators/PreOrderIterator.h"
-#include "iterators/PostOrderIterator.h"
+#include "iterators/InOrderIterator.h"
+#include "iterators/IteratorFactory.h"
 
 std::shared_ptr<Magellan::ExpNode> newNode(const int value) {
     std::shared_ptr<Magellan::ExpNode> pNode = std::make_shared<Magellan::ExpNode>();
-    pNode->m_value = value;
+    pNode->setValue(value);
 
     return (pNode);
 }
 
 int main() {
     std::shared_ptr<Magellan::ExpNode> pRoot = newNode(4);
-    pRoot->m_left = newNode(2);
-    pRoot->m_right = newNode(6);
-    pRoot->m_left->m_left = newNode(1);
-    pRoot->m_left->m_right = newNode(3);
-    pRoot->m_right->m_left = newNode(5);
-    pRoot->m_right->m_right = newNode(7);
 
-    Magellan::PreOrderIterator preItr(pRoot);
-    std::cout << "Pre-order: ";
-    while (preItr.isValid()) {
-        std::cout << (*preItr).m_value << ' ';
-        ++preItr;
+    std::shared_ptr<Magellan::ExpNode> pLeft = newNode(2);
+    pLeft->setLeft(newNode(1));
+    pLeft->setRight(newNode(3));
+
+    std::shared_ptr<Magellan::ExpNode> pRight = newNode(6);
+    pRight->setLeft(newNode(5));
+    pRight->setRight(newNode(7));
+
+    pRoot->setLeft(pLeft);
+    pRoot->setRight(pRight);
+
+    Magellan::IteratorFactory *pFactory = Magellan::IteratorFactory::getInstance();
+
+    std::shared_ptr<Magellan::Iterator> pPreItr1{ pFactory->make_iterator("preorder", pRoot) };
+    std::cout << "Pre-order with factory: ";
+    while (pPreItr1->isValid()) {
+        std::cout << (*(*pPreItr1)).getValue() << ' ';
+        ++(*pPreItr1);
     }
     std::cout << '\n';
 
-    Magellan::PostOrderIterator postItr(pRoot);
-    std::cout << "Post-order: ";
-    while (postItr.isValid()) {
-        std::cout << (*postItr).m_value << ' ';
-        ++postItr;
+    std::shared_ptr<Magellan::Iterator> pInItr1{ pFactory->make_iterator("inorder", pRoot) };
+    std::cout << "In-order with factory: ";
+    while (pInItr1->isValid()) {
+        std::cout << (*(*pInItr1)).getValue() << ' ';
+        ++(*pInItr1);
     }
     std::cout << '\n';
 

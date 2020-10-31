@@ -11,8 +11,10 @@ namespace Magellan {
 
 class ExpNode {
     friend class Iterator;
+    friend class PreOrderIterator;
+    friend class InOrderIterator;
 
-    public:
+    private:
         std::shared_ptr<ExpNode> m_left;
         std::shared_ptr<ExpNode> m_right;
         int m_value;
@@ -21,6 +23,22 @@ class ExpNode {
         ExpNode() = default;
         ~ExpNode() {
             std::cout << "ExpNode is deleted with value: " << m_value << '\n';
+        }
+
+        void setValue(const int value) {
+            m_value = value;
+        }
+
+        int getValue() const {
+            return (m_value);
+        }
+
+        void setLeft(std::shared_ptr<ExpNode> pLeft) {
+            m_left = pLeft;
+        }
+
+        void setRight(std::shared_ptr<ExpNode> pRight) {
+            m_right = pRight;
         }
 };
 
