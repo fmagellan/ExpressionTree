@@ -3,7 +3,6 @@
 #ifndef COMPONENTS_EXPNODE_H_
 #define COMPONENTS_EXPNODE_H_
 
-#include <iostream>
 #include <memory>
 #include <cassert>
 
@@ -17,20 +16,10 @@ class ExpNode {
     private:
         std::shared_ptr<ExpNode> m_left;
         std::shared_ptr<ExpNode> m_right;
-        int m_value;
 
     public:
         ExpNode() = default;
-        ~ExpNode() {
-            std::cout << "ExpNode is deleted with value: " << m_value << '\n';
-        }
-
-        void setValue(const int value) {
-            m_value = value;
-        }
-
-        int getValue() const {
-            return (m_value);
+        virtual ~ExpNode() {
         }
 
         void setLeft(std::shared_ptr<ExpNode> pLeft) {
@@ -40,6 +29,8 @@ class ExpNode {
         void setRight(std::shared_ptr<ExpNode> pRight) {
             m_right = pRight;
         }
+
+        virtual void print() = 0;
 };
 
 };  // namespace Magellan

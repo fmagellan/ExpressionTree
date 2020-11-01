@@ -5,7 +5,6 @@
 
 #include "iterators/Iterator.h"
 #include "components/ExpNode.h"
-#include <iostream>
 
 namespace Magellan {
 
@@ -16,7 +15,6 @@ class PreOrderIterator : public Iterator {
     public:
         explicit PreOrderIterator(std::shared_ptr<ExpNode> pNode)
             : Iterator(pNode) {
-            std::cout << "Preorder constructor\n";
         }
 
         virtual ~PreOrderIterator() = default;
